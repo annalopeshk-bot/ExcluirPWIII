@@ -1,0 +1,78 @@
+﻿@model List<Livro>
+@{
+    ViewData["Title"] = "Biblioteca";
+}
+
+<div class="container py-5">
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4">
+        <a class="btn btn-primary add"
+           role="button"
+           asp-controller="Livro"
+           asp-action="Criar">
+            Adicionar Livro
+        </a>
+    </div>
+
+    <h1 class="display-4 mb-4">Biblioteca</h1>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 ">
+
+        @if (Model != null && Model.Any())
+        {
+            foreach (Livro livro in Model)
+            {
+                <div class="col  " style="width: 340px;" style="gap: 10px ">
+                    <div class="card shadow-sm h-100  ">
+
+                        <img src="@livro.CapaUrl"
+                             class="card-img-top"
+                             alt="Capa de @livro.Titulo"
+                             style="height: 400px; object-fit: contain;">
+
+                        <div class="card-body ">
+
+                            <h5 class="card-title">
+                                @livro.Titulo
+                            </h5>
+
+                            <p class="card-text">
+                                <strong>Autor:</strong> @livro.Autor<br>
+                                <strong>Gênero:</strong> @livro.Genero<br>
+                                <strong>Ano:</strong> @livro.AnoPublicacao
+                            </p>
+
+                            <div class="d-flex gap-2">
+
+                                <a class="btn btn-primary botao"
+                                   asp-controller="Livro"
+                                   asp-action="Editar"
+                                   asp-route-id="@livro.Id">
+                                    Editar
+                                </a>
+
+                                <form asp-controller="Livro"
+                                      asp-action="Excluir"
+                                      method="post">
+
+                                    <input type="hidden"
+                                           name="Id"
+                                           value="@livro.Id" />
+
+                                    <button type="submit"
+                                            class="btn btn-danger">
+                                        Excluir
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
